@@ -18,11 +18,13 @@ public class SnackController : MonoBehaviour
     private void OnEnable()
     {
         playerActionControl.Enable();
+        Time.fixedDeltaTime = 0.08f;
     }
 
     private void OnDisable()
     {
         playerActionControl.Disable();
+        Time.fixedDeltaTime = 0.02f;
     }
 
     // Start is called before the first frame update
@@ -37,7 +39,8 @@ public class SnackController : MonoBehaviour
         var dir = playerActionControl.Snack.Movement.ReadValue<Vector2>();
         if(dir != Vector2.zero)
         {
-            moveDirection = dir;
+            if(dir != -moveDirection)
+                moveDirection = dir;
         }
     }
 
