@@ -15,6 +15,8 @@ public class SnackController : MonoBehaviour
     private Vector2 pointTopLeft, pointBottomRight;
     private List<Transform> snackSegments = new List<Transform>();
 
+    private int score = 0;
+
     private void Awake()
     {
         playerActionControl = new PlayerAction();
@@ -41,6 +43,8 @@ public class SnackController : MonoBehaviour
         Debug.Log(pointTopLeft + "|" + pointBottomRight);
 
         snackSegments.Add(this.transform);
+
+        ResetFoodPosition();
     }
 
     // Update is called once per frame
@@ -64,7 +68,7 @@ public class SnackController : MonoBehaviour
         }
 
         transform.position = new Vector3(Mathf.Round(transform.position.x) + moveDirection.x, Mathf.Round(transform.position.y) + moveDirection.y, 0f);
-  
+
     }
 
     private void Loop()
@@ -74,8 +78,6 @@ public class SnackController : MonoBehaviour
 
         float _y = transform.position.y > pointTopLeft.y ? Mathf.Round(pointBottomRight.y) + 1 : transform.position.y;
         _y = transform.position.y < pointBottomRight.y ? Mathf.Round(pointTopLeft.y) - 1 : _y;
-
-        Debug.Log(_x + "|||" + pointTopLeft.x);
 
         transform.position = new Vector3(Mathf.Round(_x), Mathf.Round(_y), 0f);
     }
@@ -87,21 +89,41 @@ public class SnackController : MonoBehaviour
         snackSegments.Add(_go.transform);
     }
 
+    private void ResetFoodPosition()
+    {
+        int _x = Random.Range(0, (int) pointTopLeft.x);
+        int _y = Random.Range(0, (int) pointTopLeft.y);
+
+        Vector3 _newFoodPos = new Vector3(_x,_y, 0f);
+        //Debug.Log("New Food Pos : " + _newFoodPos);
+
+        RaycastHit2D hit = Physics2D.Raycast(_newFoodPos, Vector2.zero);
+        if(hit.collider != null &&  hit.collider.CompareTag("Player"))
+        {
+            ResetFoodPosition();
+        }
+
+        foodNormal.transform.position = _newFoodPos;
+        Debug.Log("New Food Pos : " + _newFoodPos + "| Food Transform: " + foodNormal.transform.position);
+    }
+
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("Food"))
         {
             Grow();
-            // Add a new Segment
-            // Change Food Pos
-            // Score += 1
+            score += 1;
+            ResetFoodPosition();
         }
 
         else if (col.CompareTag("BigFood"))
         {
+            Grow();
             // Add a new Segment
             // Deactivate 
-            // Score += 5
+            score += 5;
+            
         }
     }
+    
 }
