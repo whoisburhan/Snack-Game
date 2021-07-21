@@ -81,11 +81,15 @@ public class SnackController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         var dir = playerActionControl.Snack.Movement.ReadValue<Vector2>();
-        if (dir != Vector2.zero)
+        
+        var tempDir = new Vector2(Mathf.Round(dir.x),Mathf.Round(dir.y));
+
+        if (tempDir != Vector2.zero || (tempDir.x != 0f &&  tempDir.y != 0f))
         {
-            if (dir != -moveDirection)
-                moveDirection = dir;
+            if (tempDir != -moveDirection)
+                moveDirection = tempDir;
         }
     }
 
