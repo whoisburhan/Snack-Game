@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SnackController : MonoBehaviour
 {
@@ -10,12 +12,15 @@ public class SnackController : MonoBehaviour
     [SerializeField] private Transform snackSegmentPrefab;
     [SerializeField] private GameObject foodNormal;
     [SerializeField] private GameObject foodBig;
+    [SerializeField] private Text scoreText;
 
     private Vector2 moveDirection =  Vector2.right;
     private Vector2 pointTopLeft, pointBottomRight;
     private List<Transform> snackSegments = new List<Transform>();
 
     private int score = 0;
+    private int maxFoodSpawnAttempt = 9999;
+    private int foodSpawnAttempt = 0;
 
     private void Awake()
     {
@@ -37,14 +42,36 @@ public class SnackController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1f;
+
         pointTopLeft = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height));
         pointBottomRight = Camera.main.ScreenToWorldPoint(new Vector3(0f, 0f));
 
         Debug.Log(pointTopLeft + "|" + pointBottomRight);
 
-        snackSegments.Add(this.transform);
+        InitializeSnack();
 
         ResetFoodPosition();
+
+        scoreText.text = score.ToString();
+    }
+
+    private void InitializeSnack()
+    {
+        if(snackSegments.Count > 0)
+        {
+            foreach(var _segment in snackSegments)
+            {
+                Destroy(_segment.gameObject);
+            }
+            snackSegments.Clear();
+        }
+
+        snackSegments.Add(this.transform);
+        for(int i = 0; i< 3 ; i++)
+        {
+            Grow();
+        }
     }
 
     // Update is called once per frame
@@ -100,11 +127,22 @@ public class SnackController : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(_newFoodPos, Vector2.zero);
         if(hit.collider != null &&  hit.collider.CompareTag("Player"))
         {
-            ResetFoodPosition();
+            foodSpawnAttempt++;
+            if(foodSpawnAttempt < maxFoodSpawnAttempt)
+            {
+                ResetFoodPosition();
+            }
+            else
+            {
+                Debug.Log("You Won!!!");
+            }
         }
+        else
+        {
+            foodNormal.transform.position = _newFoodPos;
 
-        foodNormal.transform.position = _newFoodPos;
-        Debug.Log("New Food Pos : " + _newFoodPos + "| Food Transform: " + foodNormal.transform.position);
+            foodSpawnAttempt = 0;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -113,17 +151,35 @@ public class SnackController : MonoBehaviour
         {
             Grow();
             score += 1;
+            scoreText.text = score.ToString();
             ResetFoodPosition();
         }
 
-        else if (col.CompareTag("BigFood"))
+#region BigFood
+       /* if (col.CompareTag("BigFood"))
         {
             Grow();
             // Add a new Segment
             // Deactivate 
             score += 5;
-            
+            scoreText.text = score.ToString();
+        }*/
+#endregion
+
+        if(col.CompareTag("Player"))
+        {
+            Debug.Log("GAME OVER");
+            // Retry Menu
         }
     }
+
+    #region Button Func
+
+    public void Retry()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    #endregion
     
 }
