@@ -14,13 +14,14 @@ public class SnackController : MonoBehaviour
     [SerializeField] private GameObject foodBig;
     [SerializeField] private Text scoreText;
 
-    private Vector2 moveDirection =  Vector2.right;
+    private Vector2 moveDirection = Vector2.right;
     private Vector2 pointTopLeft, pointBottomRight;
     private List<Transform> snackSegments = new List<Transform>();
 
     private int score = 0;
     private int maxFoodSpawnAttempt = 9999;
     private int foodSpawnAttempt = 0;
+    private bool isGameOver = false;
 
     private void Awake()
     {
@@ -58,9 +59,9 @@ public class SnackController : MonoBehaviour
 
     private void InitializeSnack()
     {
-        if(snackSegments.Count > 0)
+        if (snackSegments.Count > 0)
         {
-            foreach(var _segment in snackSegments)
+            foreach (var _segment in snackSegments)
             {
                 Destroy(_segment.gameObject);
             }
@@ -68,7 +69,7 @@ public class SnackController : MonoBehaviour
         }
 
         snackSegments.Add(this.transform);
-        for(int i = 0; i< 3 ; i++)
+        for (int i = 0; i < 3; i++)
         {
             Grow();
         }
@@ -78,24 +79,26 @@ public class SnackController : MonoBehaviour
     void Update()
     {
         var dir = playerActionControl.Snack.Movement.ReadValue<Vector2>();
-        if(dir != Vector2.zero)
+        if (dir != Vector2.zero)
         {
-            if(dir != -moveDirection)
+            if (dir != -moveDirection)
                 moveDirection = dir;
         }
     }
 
     private void FixedUpdate()
     {
-        Loop();
-
-        for(int i = snackSegments.Count-1; i > 0; i--)
+        if (!isGameOver)
         {
-            snackSegments[i].position = snackSegments[i - 1].position;
+            Loop();
+
+            for (int i = snackSegments.Count - 1; i > 0; i--)
+            {
+                snackSegments[i].position = snackSegments[i - 1].position;
+            }
+
+            transform.position = new Vector3(Mathf.Round(transform.position.x) + moveDirection.x, Mathf.Round(transform.position.y) + moveDirection.y, 0f);
         }
-
-        transform.position = new Vector3(Mathf.Round(transform.position.x) + moveDirection.x, Mathf.Round(transform.position.y) + moveDirection.y, 0f);
-
     }
 
     private void Loop()
@@ -118,17 +121,17 @@ public class SnackController : MonoBehaviour
 
     private void ResetFoodPosition()
     {
-        int _x = Random.Range(0, (int) pointTopLeft.x);
-        int _y = Random.Range(0, (int) pointTopLeft.y);
+        int _x = Random.Range(0, (int)pointTopLeft.x);
+        int _y = Random.Range(0, (int)pointTopLeft.y);
 
-        Vector3 _newFoodPos = new Vector3(_x,_y, 0f);
+        Vector3 _newFoodPos = new Vector3(_x, _y, 0f);
         //Debug.Log("New Food Pos : " + _newFoodPos);
 
         RaycastHit2D hit = Physics2D.Raycast(_newFoodPos, Vector2.zero);
-        if(hit.collider != null &&  hit.collider.CompareTag("Player"))
+        if (hit.collider != null && hit.collider.CompareTag("Player"))
         {
             foodSpawnAttempt++;
-            if(foodSpawnAttempt < maxFoodSpawnAttempt)
+            if (foodSpawnAttempt < maxFoodSpawnAttempt)
             {
                 ResetFoodPosition();
             }
@@ -145,6 +148,17 @@ public class SnackController : MonoBehaviour
         }
     }
 
+    private void ResetGame()
+    {
+        InitializeSnack();
+
+        ResetFoodPosition();
+
+        score = 0;
+        scoreText.text = "0";
+        isGameOver = false;
+    }
+
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("Food"))
@@ -153,24 +167,25 @@ public class SnackController : MonoBehaviour
             score += 1;
             scoreText.text = score.ToString();
 
-            if(AudioManager.Instance != null)   AudioManager.Instance.AudioChangeFunc(0,0);
+            if (AudioManager.Instance != null) AudioManager.Instance.AudioChangeFunc(0, 0);
 
             ResetFoodPosition();
         }
 
-#region BigFood
-       /* if (col.CompareTag("BigFood"))
-        {
-            Grow();
-            // Add a new Segment
-            // Deactivate 
-            score += 5;
-            scoreText.text = score.ToString();
-        }*/
-#endregion
+        #region BigFood
+        /* if (col.CompareTag("BigFood"))
+         {
+             Grow();
+             // Add a new Segment
+             // Deactivate 
+             score += 5;
+             scoreText.text = score.ToString();
+         }*/
+        #endregion
 
-        if(col.CompareTag("Player"))
+        if (col.CompareTag("Player"))
         {
+            isGameOver = true;
             Debug.Log("GAME OVER");
             // Retry Menu
         }
@@ -184,5 +199,5 @@ public class SnackController : MonoBehaviour
     }
 
     #endregion
-    
+
 }

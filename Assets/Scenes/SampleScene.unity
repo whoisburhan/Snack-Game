@@ -603,6 +603,7 @@ MonoBehaviour:
   backgroundClip: []
   sounds:
   - {fileID: 8300000, guid: be0fa76f9502f1c46904ca1c4ce47724, type: 3}
+  - {fileID: 8300000, guid: 7dac5ec17377164489b4292e123306a1, type: 3}
 --- !u!1 &1435254744
 GameObject:
   m_ObjectHideFlags: 0
