@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3453742898649507906}
   - component: {fileID: 3650848689737337855}
   - component: {fileID: 1011324158775661133}
+  - component: {fileID: 6883458280487424265}
   m_Layer: 0
   m_Name: SnakeSegment
   m_TagString: Player
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: 7956d9584b4f3ad4d842f577568a182e, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.24563932, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -109,3 +110,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.75, y: 0.75}
   m_EdgeRadius: 0
+--- !u!114 &6883458280487424265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3121095088767353056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06dbfd096919203459abe6412f06f08d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

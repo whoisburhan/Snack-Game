@@ -375,7 +375,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &535458279
 RectTransform:
   m_ObjectHideFlags: 0
@@ -599,7 +599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.82836753, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.827451, b: 0, a: 0.6509804}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1213,7 +1213,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: 7956d9584b4f3ad4d842f577568a182e, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.24705882, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1275,6 +1275,7 @@ MonoBehaviour:
   foodNormal: {fileID: 2021585268}
   foodBig: {fileID: 0}
   scoreText: {fileID: 788174352}
+  gameOverText: {fileID: 0}
   UIObject: {fileID: 535458278}
 --- !u!61 &1730387847
 BoxCollider2D:
@@ -1320,11 +1321,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5242752182694291357, guid: 1ff428b13a5a49349ac2bc66e8379300, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: 2.938
       objectReference: {fileID: 0}
     - target: {fileID: 5242752182694291357, guid: 1ff428b13a5a49349ac2bc66e8379300, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 9.846
       objectReference: {fileID: 0}
     - target: {fileID: 5242752182694291357, guid: 1ff428b13a5a49349ac2bc66e8379300, type: 3}
       propertyPath: m_LocalPosition.z

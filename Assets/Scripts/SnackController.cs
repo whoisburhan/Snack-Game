@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class SnackController : MonoBehaviour
 {
+    public static event Action OnInitialize;
     private PlayerAction playerActionControl;
 
     [SerializeField] private Rigidbody2D rb2d;
@@ -13,6 +15,7 @@ public class SnackController : MonoBehaviour
     [SerializeField] private GameObject foodNormal;
     [SerializeField] private GameObject foodBig;
     [SerializeField] private Text scoreText;
+    [SerializeField] private Text gameOverText;
     [SerializeField] private GameObject UIObject;
 
     private Vector2 moveDirection = Vector2.right;
@@ -49,27 +52,24 @@ public class SnackController : MonoBehaviour
         pointTopLeft = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height));
         pointBottomRight = Camera.main.ScreenToWorldPoint(new Vector3(0f, 0f));
 
-        Debug.Log(pointTopLeft + "|" + pointBottomRight);
-
         InitializeSnack();
 
         ResetFoodPosition();
 
         scoreText.text = score.ToString();
 
-        if(UIObject!=null)  UIObject.SetActive(false);
+        if (UIObject != null) UIObject.SetActive(false);
     }
 
     private void InitializeSnack()
     {
         if (snackSegments.Count > 0)
         {
-            foreach (var _segment in snackSegments)
-            {
-                Destroy(_segment.gameObject);
-            }
             snackSegments.Clear();
+            OnInitialize?.Invoke();
         }
+
+        transform.position = Vector3.zero;
 
         snackSegments.Add(this.transform);
         for (int i = 0; i < 3; i++)
@@ -124,8 +124,8 @@ public class SnackController : MonoBehaviour
 
     private void ResetFoodPosition()
     {
-        int _x = Random.Range(0, (int)pointTopLeft.x);
-        int _y = Random.Range(0, (int)pointTopLeft.y);
+        int _x = UnityEngine.Random.Range(0, (int)pointTopLeft.x);
+        int _y = UnityEngine.Random.Range(0, (int)pointTopLeft.y);
 
         Vector3 _newFoodPos = new Vector3(_x, _y, 0f);
         //Debug.Log("New Food Pos : " + _newFoodPos);
@@ -141,6 +141,13 @@ public class SnackController : MonoBehaviour
             else
             {
                 Debug.Log("You Won!!!");
+                isGameOver = true;
+
+                if (AudioManager.Instance != null) AudioManager.Instance.AudioChangeFunc(0, 1);
+                
+                if (gameOverText != null) gameOverText.text = "You Won!";
+
+                if (UIObject != null) UIObject.SetActive(true);
             }
         }
         else
@@ -153,15 +160,16 @@ public class SnackController : MonoBehaviour
 
     private void ResetGame()
     {
+        isGameOver = false;
         InitializeSnack();
 
         ResetFoodPosition();
 
-        if(UIObject!=null)  UIObject.SetActive(false);
+        if (UIObject != null) UIObject.SetActive(false);
 
         score = 0;
         scoreText.text = "0";
-        isGameOver = false;
+
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -194,7 +202,9 @@ public class SnackController : MonoBehaviour
 
             if (AudioManager.Instance != null) AudioManager.Instance.AudioChangeFunc(0, 1);
             // Retry Menu
-            if(UIObject!=null)  UIObject.SetActive(true);
+            if (gameOverText != null) gameOverText.text = "Game Over";
+
+            if (UIObject != null) UIObject.SetActive(true);
         }
     }
 
