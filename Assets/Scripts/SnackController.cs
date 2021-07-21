@@ -152,6 +152,9 @@ public class SnackController : MonoBehaviour
             Grow();
             score += 1;
             scoreText.text = score.ToString();
+
+            if(AudioManager.Instance != null)   AudioManager.Instance.AudioChangeFunc(0,0);
+
             ResetFoodPosition();
         }
 
