@@ -13,6 +13,7 @@ public class SnackController : MonoBehaviour
     [SerializeField] private GameObject foodNormal;
     [SerializeField] private GameObject foodBig;
     [SerializeField] private Text scoreText;
+    [SerializeField] private GameObject UIObject;
 
     private Vector2 moveDirection = Vector2.right;
     private Vector2 pointTopLeft, pointBottomRight;
@@ -55,6 +56,8 @@ public class SnackController : MonoBehaviour
         ResetFoodPosition();
 
         scoreText.text = score.ToString();
+
+        if(UIObject!=null)  UIObject.SetActive(false);
     }
 
     private void InitializeSnack()
@@ -154,6 +157,8 @@ public class SnackController : MonoBehaviour
 
         ResetFoodPosition();
 
+        if(UIObject!=null)  UIObject.SetActive(false);
+
         score = 0;
         scoreText.text = "0";
         isGameOver = false;
@@ -186,8 +191,10 @@ public class SnackController : MonoBehaviour
         if (col.CompareTag("Player"))
         {
             isGameOver = true;
-            Debug.Log("GAME OVER");
+
+            if (AudioManager.Instance != null) AudioManager.Instance.AudioChangeFunc(0, 1);
             // Retry Menu
+            if(UIObject!=null)  UIObject.SetActive(true);
         }
     }
 
@@ -195,7 +202,8 @@ public class SnackController : MonoBehaviour
 
     public void Retry()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        ResetGame();
     }
 
     #endregion
