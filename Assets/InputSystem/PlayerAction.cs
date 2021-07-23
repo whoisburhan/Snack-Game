@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/PlayerAction.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/InputSystem/PlayerAction.inputactions'
 
 using System;
 using System.Collections;
@@ -23,6 +23,38 @@ public class @PlayerAction : IInputActionCollection, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""e22bf7ac-6287-48c1-b847-71aa10cca776"",
                     ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Up"",
+                    ""type"": ""Button"",
+                    ""id"": ""36dcc435-db38-4241-9948-13c62d57976a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""b02fd19f-4bc6-46c1-af0a-314d68aece0d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Left"",
+                    ""type"": ""Button"",
+                    ""id"": ""457a0465-0322-46a8-94b0-21239205e144"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Right"",
+                    ""type"": ""Button"",
+                    ""id"": ""6c836182-f78d-4687-b91f-6a1733720e1c"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -148,6 +180,94 @@ public class @PlayerAction : IInputActionCollection, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""77237bc9-55fd-4eaa-865c-d0c270a2f67d"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f96d7621-acb6-4fa7-a1b6-f8db8acf9ebe"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6aaa9d44-e3db-40ed-8242-e4eaf9b49edf"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""875f9cb5-0811-41f5-98f6-87ebdc15452f"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a137a846-5cf3-450e-81d2-1d395987349c"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b0b3f93-3899-42dd-afaf-cdd9b58c4321"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c3dd38b5-744e-4eec-9218-a964d3e14387"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""24b6335f-1beb-4da2-babd-3d86922df8c4"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -157,6 +277,10 @@ public class @PlayerAction : IInputActionCollection, IDisposable
         // Snack
         m_Snack = asset.FindActionMap("Snack", throwIfNotFound: true);
         m_Snack_Movement = m_Snack.FindAction("Movement", throwIfNotFound: true);
+        m_Snack_Up = m_Snack.FindAction("Up", throwIfNotFound: true);
+        m_Snack_Down = m_Snack.FindAction("Down", throwIfNotFound: true);
+        m_Snack_Left = m_Snack.FindAction("Left", throwIfNotFound: true);
+        m_Snack_Right = m_Snack.FindAction("Right", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -207,11 +331,19 @@ public class @PlayerAction : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Snack;
     private ISnackActions m_SnackActionsCallbackInterface;
     private readonly InputAction m_Snack_Movement;
+    private readonly InputAction m_Snack_Up;
+    private readonly InputAction m_Snack_Down;
+    private readonly InputAction m_Snack_Left;
+    private readonly InputAction m_Snack_Right;
     public struct SnackActions
     {
         private @PlayerAction m_Wrapper;
         public SnackActions(@PlayerAction wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Snack_Movement;
+        public InputAction @Up => m_Wrapper.m_Snack_Up;
+        public InputAction @Down => m_Wrapper.m_Snack_Down;
+        public InputAction @Left => m_Wrapper.m_Snack_Left;
+        public InputAction @Right => m_Wrapper.m_Snack_Right;
         public InputActionMap Get() { return m_Wrapper.m_Snack; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -224,6 +356,18 @@ public class @PlayerAction : IInputActionCollection, IDisposable
                 @Movement.started -= m_Wrapper.m_SnackActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_SnackActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_SnackActionsCallbackInterface.OnMovement;
+                @Up.started -= m_Wrapper.m_SnackActionsCallbackInterface.OnUp;
+                @Up.performed -= m_Wrapper.m_SnackActionsCallbackInterface.OnUp;
+                @Up.canceled -= m_Wrapper.m_SnackActionsCallbackInterface.OnUp;
+                @Down.started -= m_Wrapper.m_SnackActionsCallbackInterface.OnDown;
+                @Down.performed -= m_Wrapper.m_SnackActionsCallbackInterface.OnDown;
+                @Down.canceled -= m_Wrapper.m_SnackActionsCallbackInterface.OnDown;
+                @Left.started -= m_Wrapper.m_SnackActionsCallbackInterface.OnLeft;
+                @Left.performed -= m_Wrapper.m_SnackActionsCallbackInterface.OnLeft;
+                @Left.canceled -= m_Wrapper.m_SnackActionsCallbackInterface.OnLeft;
+                @Right.started -= m_Wrapper.m_SnackActionsCallbackInterface.OnRight;
+                @Right.performed -= m_Wrapper.m_SnackActionsCallbackInterface.OnRight;
+                @Right.canceled -= m_Wrapper.m_SnackActionsCallbackInterface.OnRight;
             }
             m_Wrapper.m_SnackActionsCallbackInterface = instance;
             if (instance != null)
@@ -231,6 +375,18 @@ public class @PlayerAction : IInputActionCollection, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
+                @Up.started += instance.OnUp;
+                @Up.performed += instance.OnUp;
+                @Up.canceled += instance.OnUp;
+                @Down.started += instance.OnDown;
+                @Down.performed += instance.OnDown;
+                @Down.canceled += instance.OnDown;
+                @Left.started += instance.OnLeft;
+                @Left.performed += instance.OnLeft;
+                @Left.canceled += instance.OnLeft;
+                @Right.started += instance.OnRight;
+                @Right.performed += instance.OnRight;
+                @Right.canceled += instance.OnRight;
             }
         }
     }
@@ -238,5 +394,9 @@ public class @PlayerAction : IInputActionCollection, IDisposable
     public interface ISnackActions
     {
         void OnMovement(InputAction.CallbackContext context);
+        void OnUp(InputAction.CallbackContext context);
+        void OnDown(InputAction.CallbackContext context);
+        void OnLeft(InputAction.CallbackContext context);
+        void OnRight(InputAction.CallbackContext context);
     }
 }

@@ -82,15 +82,21 @@ public class SnackController : MonoBehaviour
     void Update()
     {
         
-        var dir = playerActionControl.Snack.Movement.ReadValue<Vector2>();
-        
+        /*var dir = playerActionControl.Snack.Movement.ReadValue<Vector2>();
+
+
         var tempDir = new Vector2(Mathf.Round(dir.x),Mathf.Round(dir.y));
 
         if (tempDir != Vector2.zero || (tempDir.x != 0f &&  tempDir.y != 0f))
         {
             if (tempDir != -moveDirection)
                 moveDirection = tempDir;
-        }
+        }*/
+
+        if(playerActionControl.Snack.Up.triggered && moveDirection != Vector2.down)  moveDirection = Vector2.up;
+        else if(playerActionControl.Snack.Down.triggered && moveDirection != Vector2.up) moveDirection = Vector2.down;
+        else if(playerActionControl.Snack.Right.triggered && moveDirection != Vector2.left) moveDirection = Vector2.right;
+        else if(playerActionControl.Snack.Left.triggered && moveDirection != Vector2.right) moveDirection = Vector2.left;
     }
 
     private void FixedUpdate()
